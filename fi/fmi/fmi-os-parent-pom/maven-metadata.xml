@@ -3,10 +3,10 @@
   <groupId>fi.fmi</groupId>
   <artifactId>fmi-os-parent-pom</artifactId>
   <versioning>
-    <release>0.2</release>
+    <release>0.3</release>
     <versions>
-      <version>0.2</version>
+      <version>0.3</version>
     </versions>
-    <lastUpdated>20170315103949</lastUpdated>
+    <lastUpdated>20170315105337</lastUpdated>
   </versioning>
 </metadata>

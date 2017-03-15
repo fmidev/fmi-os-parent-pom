@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>fi.fmi</groupId>
   <artifactId>fmi-os-parent-pom</artifactId>
-  <version>0.2</version>
+  <version>0.3</version>
   <packaging>pom</packaging>
 
   <name>FMI OS Root Parent POM </name>
@@ -27,7 +27,7 @@
     <connection>${scm-url}</connection>
     <developerConnection>${scm-url}</developerConnection>
     <url>${scm-web-url}</url>
-	<tag>fmi-os-parent-pom-0.2</tag>
+	<tag>fmi-os-parent-pom-0.3</tag>
   </scm>
 
   <!-- Two-phase release to github as defined at http://stackoverflow.com/questions/14013644/hosting-a-maven-repository-on-github-->
@@ -76,7 +76,6 @@
     <buildnumber-maven-plugin.version>1.2</buildnumber-maven-plugin.version>
     <maven-bundle-plugin.version>2.4.0</maven-bundle-plugin.version>
     <maven-changelog-plugin.version>2.2</maven-changelog-plugin.version>
-    <maven-checkstyle-plugin.version>2.11</maven-checkstyle-plugin.version>
     <maven-clean-plugin.version>2.5</maven-clean-plugin.version>
     <cobertura-maven-plugin.version>2.6</cobertura-maven-plugin.version>
     <maven-compiler-plugin.version>3.1</maven-compiler-plugin.version>
@@ -96,12 +95,6 @@
     <l10n-maven-plugin.version>1.0-alpha-2</l10n-maven-plugin.version>
     <maven-linkcheck-plugin.version>1.1</maven-linkcheck-plugin.version>
     <maven-plugin-plugin.version>3.2</maven-plugin-plugin.version>
-    <maven-pmd4-plugin.version>2.7.1</maven-pmd4-plugin.version>
-    <!-- This is manually and locally built to overcome https://jira.fmi.fi/browse/INFRA-275 -->
-    <!-- Official latest version of maven-pmd-plugin is 3.0.1, and we are awaiting the release -->
-    <!-- 3.1 that supposedly fixes the issue -->
-    <maven-pmd5-plugin.version>3.0.2.FMI</maven-pmd5-plugin.version>
-    <maven-pmd-plugin.version>${maven-pmd5-plugin.version}</maven-pmd-plugin.version>
     <maven-project-info-reports-plugin.version>2.7</maven-project-info-reports-plugin.version>
     <maven-rar-plugin.version>2.3</maven-rar-plugin.version>
     <maven-release-plugin.version>2.5.3</maven-release-plugin.version>
@@ -999,10 +992,6 @@
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-checkstyle-plugin</artifactId>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-clean-plugin</artifactId>
       </plugin>
       <plugin>
@@ -1032,10 +1021,6 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-jar-plugin</artifactId>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-pmd-plugin</artifactId>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -1081,24 +1066,6 @@
 
   <reporting>
     <plugins>
-
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-checkstyle-plugin</artifactId>
-        <version>${maven-checkstyle-plugin.version}</version>
-        <configuration>
-          <!-- NOTE: Changes must be duplicated to <build/pluginManagement> block! -->
-          <includes>${checkstyle.includes}</includes>
-          <excludes>${checkstyle.excludes}</excludes>
-          <configLocation>${checkstyle.configLocation}</configLocation>
-          <includeTestSourceDirectory>${checkstyle.includeTestSourceDirectory}</includeTestSourceDirectory>
-          <linkXRef>${checkstyle.linkXRef}</linkXRef>
-          <propertyExpansion>${checkstyle.suppressionsFileExpression}=${checkstyle.suppressions.file}</propertyExpansion>
-          <skip>${checkstyle.skip}</skip>
-          <suppressionsFileExpression>${checkstyle.suppressionsFileExpression}</suppressionsFileExpression>
-          <suppressionsLocation>${checkstyle.suppressionsLocation}</suppressionsLocation>
-        </configuration>
-      </plugin>
     
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
@@ -1189,21 +1156,6 @@
           <excludes>
             <exclude>**/*log4j.properties</exclude>
           </excludes>
-        </configuration>
-      </plugin>
-     
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-pmd-plugin</artifactId>
-        <version>${maven-pmd-plugin.version}</version>
-        <configuration>
-          <!-- NOTE: Changes must be duplicated to <build/pluginManagement> block! -->
-          <includeTests>${pmd.includeTests}</includeTests>
-          <rulesets>
-            <ruleset>${pmd.ruleset}</ruleset>
-          </rulesets>
-          <skip>${pmd.skip}</skip>
-          <targetJdk>${pmd.targetJdk}</targetJdk>
         </configuration>
       </plugin>
    
@@ -1543,59 +1495,6 @@
       <build>
         <plugins>
           <plugin>
-         
-            <!-- Currently m2e-code-quality / Eclipse-CS don't support declaring Checkstyle suppressions file. But maven-checkstyle-plugin supports it by copying 
-              declared suppressions file to project target folder making it visible to Checkstyle. As a workaround we'll do the same thing here with this little hack: copy suppressions 
-              file from an URL (that may point to suppressions file in JAR located in local maven repository) defined by checkstyle.suppressions.url property to project target 
-              directory. This is done by running maven-antrun-plugin in initialize phase. For this, we have ensured above, that fmi-buildtools jar is loaded into local repository 
-              by Eclipse. -->
-            <!-- This plugin definition should be removed altogether with maven-antrun-plugin M2E lifecycle-mapping in <pluginManagement>-section, <dependencies>-section 
-              of this profile and <checkstyle.suppressions.url> property, when m2e-code-quality / Eclipse-CS eventually (=hopefully) supports declaring suppressions file. -->
-           
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-antrun-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>copy-checkstyle-suppressions</id>
-                <phase>initialize</phase>
-                <goals>
-                  <goal>run</goal>
-                </goals>
-                <configuration>
-                  <target>
-                    <get src="${checkstyle.suppressions.url}" dest="${checkstyle.suppressions.file}" skipexisting="true" />
-                  </target>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-checkstyle-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>fmi-checkstyle-config</id>
-                <phase>compile</phase>
-                <goals>
-                  <goal>check</goal>
-                </goals>
-              </execution>
-            </executions>
-          </plugin>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-pmd-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>fmi-pmd-config</id>
-                <phase>compile</phase>
-                <goals>
-                  <goal>check</goal>
-                </goals>
-              </execution>
-            </executions>
-          </plugin>
-          <plugin>
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>findbugs-maven-plugin</artifactId>
             <executions>
@@ -1610,34 +1509,6 @@
           </plugin>
         </plugins>
       </build>
-    </profile>
-   
-    <profile>
-      <id>pmd4-config</id>
-      <activation>
-        <activeByDefault>false</activeByDefault>
-        <property>
-          <!-- PMD plugin for Eclipse 3 uses PMD 4. -->
-          <!-- This activation should be here only temporarily until Eclipse 4 is officially supported at FMI. -->
-          <!-- To enable use of Eclipse 4.x, activate pmd5-config profile in your settings.xml -->
-          <name>m2e.version</name>
-        </property>
-      </activation>
-      <properties>
-        <pmd.major-version>4</pmd.major-version>
-        <maven-pmd-plugin.version>${maven-pmd4-plugin.version}</maven-pmd-plugin.version>
-      </properties>
-    </profile>
-    
-    <profile>
-      <id>pmd5-config</id>
-      <activation>
-        <activeByDefault>false</activeByDefault>
-      </activation>
-      <properties>
-        <pmd.major-version>5</pmd.major-version>
-        <maven-pmd-plugin.version>${maven-pmd5-plugin.version}</maven-pmd-plugin.version>
-      </properties>
     </profile>
    
     <profile>
