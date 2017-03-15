@@ -1067,6 +1067,17 @@
     </plugins>
   </build>
 
+  <repositories>
+    <repository>
+        <id>${project.artifactId}-mvn-repo</id>
+        <url>https://raw.github.com/${github-repo-owner}/${project.artifactId}/mvn-repo/</url>
+        <snapshots>
+            <enabled>true</enabled>
+            <updatePolicy>always</updatePolicy>
+        </snapshots>
+    </repository>
+   </repositories>
+
   <reporting>
     <plugins>
 
@@ -1390,8 +1401,6 @@
     </profile>
 
 
-
-    <!-- START SNIPPET: integration-test-copy-profile -->
     <profile>
       <id>integration-test-copy</id>
       <activation>
