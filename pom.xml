@@ -1010,7 +1010,7 @@
   <repositories>
     <repository>
       <id>FMI-os-mvn-repo</id>
-      <url>https://raw.github.com/${github-repo-owner}/${github-mvn-repo}/</url>
+      <url>https://raw.githubusercontent.com/${github-repo-owner}/${github-mvn-repo}/master</url>
       <snapshots>
         <enabled>true</enabled>
         <updatePolicy>always</updatePolicy>
