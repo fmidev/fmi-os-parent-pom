@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>fi.fmi</groupId>
   <artifactId>fmi-os-parent-pom</artifactId>
   <version>0.5-SNAPSHOT</version>
   <packaging>pom</packaging>
 
-  <name>FMI OS Root Parent POM </name>
+  <name>FMI OS Root Parent POM</name>
   <description>The root POM for for Open Source maven projects from FMI</description>
 
- 
+
   <url>https://github.com/${github-repo-owner}/${project.artifactId}</url>
- 
+
 
   <organization>
     <name>FMI OpenSource community</name>
@@ -27,25 +28,24 @@
     <connection>${scm-url}</connection>
     <developerConnection>${scm-url}</developerConnection>
     <url>${scm-web-url}</url>
-	<tag>HEAD</tag>
+    <tag>HEAD</tag>
   </scm>
 
   <!-- Two-phase release to github as defined at http://stackoverflow.com/questions/14013644/hosting-a-maven-repository-on-github-->
   <distributionManagement>
     <repository>
-        <id>internal.repo</id>
-        <name>Temporary Staging Repository</name>
-        <url>file://${project.build.directory}/mvn-repo</url>
+      <id>internal.repo</id>
+      <name>Temporary Staging Repository</name>
+      <url>file://${project.build.directory}/mvn-repo</url>
     </repository>
   </distributionManagement>
 
 
-
   <properties>
     <!-- Most of these SHOULD NOT be overriden in child POMs -->
-	<project.scm.id>github</project.scm.id>
-	<github-repo-owner>ilkkarinne</github-repo-owner>
-	<github.global.server>github</github.global.server>
+    <project.scm.id>github</project.scm.id>
+    <github-repo-owner>ilkkarinne</github-repo-owner>
+    <github.global.server>github</github.global.server>
     <github-mvn-repo>fmi-os-mvn-repo</github-mvn-repo>
     <scm-url>scm:git:https://github.com/${github-repo-owner}/${project.artifactId}.git/</scm-url>
     <scm-web-url>https://github.com/${github-repo-owner}/${project.artifactId}</scm-web-url>
@@ -64,10 +64,10 @@
     <!-- or override them both by overriding property java.version. -->
     <maven-compiler-plugin.source.version>${java.version}</maven-compiler-plugin.source.version>
     <maven-compiler-plugin.target.version>${java.version}</maven-compiler-plugin.target.version>
-	<maven-assembly-plugin.version>2.4</maven-assembly-plugin.version>
-	<maven-clean-plugin.version>2.5</maven-clean-plugin.version>
-	
- 	<fmi-maven-skin.version>1.0</fmi-maven-skin.version>
+    <maven-assembly-plugin.version>2.4</maven-assembly-plugin.version>
+    <maven-clean-plugin.version>2.5</maven-clean-plugin.version>
+
+    <fmi-maven-skin.version>1.0</fmi-maven-skin.version>
     <maven-antrun-plugin.version>1.7</maven-antrun-plugin.version>
     <!-- antrun plugin's sshexec target needs this -->
     <ant-jsch.version>1.9.2</ant-jsch.version>
@@ -116,7 +116,7 @@
     <versions-maven-plugin.version>2.1</versions-maven-plugin.version>
     <maven-war-plugin.version>2.4</maven-war-plugin.version>
     <m2e-lifecycle-mapping.version>1.0.0</m2e-lifecycle-mapping.version>
-	
+
     <assertj-core.version>1.5.0</assertj-core.version>
     <fmi-common-test.version>0.1-SNAPSHOT</fmi-common-test.version>
     <fongo.version>1.3.0</fongo.version>
@@ -126,14 +126,12 @@
     <mockito.version>1.9.5</mockito.version>
     <powermock.version>1.5.3</powermock.version>
 
- 
 
     <groovy.version>2.1.0</groovy.version>
     <logback.version>1.0.13</logback.version>
     <log4j.version>1.2.14</log4j.version>
     <slf4j.version>1.7.5</slf4j.version>
     <sysout-over-slf4j.version>1.0.2</sysout-over-slf4j.version>
-   
 
 
     <freemarker.version>2.3.20</freemarker.version>
@@ -144,7 +142,7 @@
     <joda-time.version>2.3</joda-time.version>
     <practicalxml.version>1.1.17</practicalxml.version>
     <velocity.version>1.7</velocity.version>
-   
+
     <!-- Spring and related -->
     <aspectj.version>1.7.0</aspectj.version>
     <spring.version>3.1.2.RELEASE</spring.version>
@@ -153,22 +151,22 @@
     <spring-rabbit.version>1.2.0.RELEASE</spring-rabbit.version>
     <spring-security.version>3.1.2.RELEASE</spring-security.version>
 
-    
+
     <!-- Quality plugins -->
     <findbugs-jsr305.version>2.0.3</findbugs-jsr305.version>
     <findbugs-annotations.version>2.0.3</findbugs-annotations.version>
 
- 
+
     <maven-bundle-plugin.manifest.path>${project.build.outputDirectory}/META-INF/MANIFEST.MF</maven-bundle-plugin.manifest.path>
-   
+
     <!-- This is just because HEAD http://search.maven.org/ responds with 404 -->
     <maven-linkcheck-plugin.httpMethod>GET</maven-linkcheck-plugin.httpMethod>
-   
+
     <!-- The following two properties are empty intentionally -->
     <!-- They are quite environment specific and should be set via activating a profile, for instance -->
     <maven-javadoc-plugin.javadoc.version />
     <maven-javadoc-plugin.javadoc.executable />
-    
+
     <!-- This MUST point to an existing assembly descriptor. -->
     <!-- You may leave it as-is, and place a file at the path below, or override the property -->
     <!-- and place your descriptor at that path. -->
@@ -179,16 +177,15 @@
     <assembly.addClasspath>true</assembly.addClasspath>
     <!-- in a sub-folder "lib". -->
     <assembly.classpathPrefix>lib</assembly.classpathPrefix>
-   
-   
+
+
     <maven-project-info-reports-plugin.showAvatarImages>false</maven-project-info-reports-plugin.showAvatarImages>
-    
-    
+
+
     <integration-test-src-path>src/test-integration/java</integration-test-src-path>
     <integration-test-resource-path>src/test-integration/resources</integration-test-resource-path>
 
-    
-  
+
     <findbugs.effort>Max</findbugs.effort>
     <findbugs.includeTests>true</findbugs.includeTests>
     <findbugs.maxRank>20</findbugs.maxRank>
@@ -200,16 +197,15 @@
     <findbugs.jvmArgs />
     <findbugs.maxHeap>512</findbugs.maxHeap>
     <findbugs.timeout>600000</findbugs.timeout>
- 
-   
+
 
   </properties>
-  
+
   <dependencyManagement>
     <dependencies>
 
       <!-- Test-scoped dependencies -->
-   
+
       <dependency>
         <!-- Intuitive assertion library to be used in conjunction with JUnit -->
         <groupId>org.assertj</groupId>
@@ -284,8 +280,8 @@
         <version>${JUnitParams.version}</version>
         <scope>test</scope>
       </dependency>
-    
-     
+
+
       <!-- Logging -->
       <dependency>
         <!-- The recommended logging API http://www.slf4j.org/ -->
@@ -561,7 +557,7 @@
         <artifactId>jackson-databind</artifactId>
         <version>${jackson.version}</version>
       </dependency>
-      
+
       <dependency>
         <!-- A template engine http://freemarker.org/ -->
         <!-- See also notes on the old "org-less" groupId on page -->
@@ -718,10 +714,10 @@
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-deploy-plugin</artifactId>
           <version>${maven-deploy-plugin.version}</version>
-		  <!-- From http://stackoverflow.com/questions/14013644/hosting-a-maven-repository-on-github -->
-		  <configuration>
-		    <altDeploymentRepository>internal.repo::default::file://${project.build.directory}/mvn-repo</altDeploymentRepository>
-		  </configuration>
+          <!-- From http://stackoverflow.com/questions/14013644/hosting-a-maven-repository-on-github -->
+          <configuration>
+            <altDeploymentRepository>internal.repo::default::file://${project.build.directory}/mvn-repo</altDeploymentRepository>
+          </configuration>
         </plugin>
 
         <plugin>
@@ -870,30 +866,32 @@
           </dependencies>
         </plugin>
 
-		<plugin>
-		            <groupId>com.github.github</groupId>
-		            <artifactId>site-maven-plugin</artifactId>
-		            <version>0.11</version>
-		            <configuration>
-		                <message>Maven artifacts for ${project.version}</message>  <!-- git commit message -->
-		                <noJekyll>true</noJekyll>                                  <!-- disable webpage processing -->
-		                <outputDirectory>${project.build.directory}/mvn-repo</outputDirectory> <!-- matches distribution management repository url above -->
-		                <branch>refs/heads/master</branch>                       <!-- remote branch name -->
-		                <includes><include>**/*</include></includes>
-		                <repositoryName>${github-mvn-repo}</repositoryName>      <!-- github repo name -->
-		                <repositoryOwner>${github-repo-owner}</repositoryOwner>    <!-- github username  -->
-                    <merge>true</merge>
-		            </configuration>
-		            <executions>
-		              <!-- run site-maven-plugin's 'site' target as part of the build's normal 'deploy' phase -->
-		              <execution>
-		                <goals>
-		                  <goal>site</goal>
-		                </goals>
-		                <phase>deploy</phase>
-		              </execution>
-		            </executions>
-		        </plugin>
+        <plugin>
+          <groupId>com.github.github</groupId>
+          <artifactId>site-maven-plugin</artifactId>
+          <version>0.11</version>
+          <configuration>
+            <message>Maven artifacts for ${project.version}</message>  <!-- git commit message -->
+            <noJekyll>true</noJekyll>                                  <!-- disable webpage processing -->
+            <outputDirectory>${project.build.directory}/mvn-repo</outputDirectory> <!-- matches distribution management repository url above -->
+            <branch>refs/heads/master</branch>                       <!-- remote branch name -->
+            <includes>
+              <include>**/*</include>
+            </includes>
+            <repositoryName>${github-mvn-repo}</repositoryName>      <!-- github repo name -->
+            <repositoryOwner>${github-repo-owner}</repositoryOwner>    <!-- github username  -->
+            <merge>true</merge>
+          </configuration>
+          <executions>
+            <!-- run site-maven-plugin's 'site' target as part of the build's normal 'deploy' phase -->
+            <execution>
+              <goals>
+                <goal>site</goal>
+              </goals>
+              <phase>deploy</phase>
+            </execution>
+          </executions>
+        </plugin>
 
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -1003,27 +1001,27 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-war-plugin</artifactId>
       </plugin>
-	  <plugin>
+      <plugin>
         <groupId>com.github.github</groupId>
-	    <artifactId>site-maven-plugin</artifactId>
-	  </plugin>
+        <artifactId>site-maven-plugin</artifactId>
+      </plugin>
     </plugins>
   </build>
 
   <repositories>
     <repository>
-        <id>FMI-os-mvn-repo</id>
-        <url>https://raw.github.com/${github-repo-owner}/${github-mvn-repo}/</url>
-        <snapshots>
-            <enabled>true</enabled>
-            <updatePolicy>always</updatePolicy>
-        </snapshots>
+      <id>FMI-os-mvn-repo</id>
+      <url>https://raw.github.com/${github-repo-owner}/${github-mvn-repo}/</url>
+      <snapshots>
+        <enabled>true</enabled>
+        <updatePolicy>always</updatePolicy>
+      </snapshots>
     </repository>
-   </repositories>
+  </repositories>
 
   <reporting>
     <plugins>
-    
+
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>cobertura-maven-plugin</artifactId>
@@ -1048,7 +1046,7 @@
           </reportSet>
         </reportSets>
       </plugin>
-   
+
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>findbugs-maven-plugin</artifactId>
@@ -1067,7 +1065,7 @@
           <skip>${findbugs.skip}</skip>
         </configuration>
       </plugin>
-     
+
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
@@ -1108,7 +1106,7 @@
           </excludes>
         </configuration>
       </plugin>
-   
+
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-project-info-reports-plugin</artifactId>
@@ -1157,7 +1155,7 @@
           </tagListOptions>
         </configuration>
       </plugin>
-   
+
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>versions-maven-plugin</artifactId>
@@ -1355,7 +1353,7 @@
         </pluginManagement>
       </build>
     </profile>
-   
+
     <profile>
       <id>osgi-bundler</id>
       <!-- Can be activated explicitly, or by having the magic file or directory in place -->
