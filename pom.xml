@@ -3,15 +3,12 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>fi.fmi</groupId>
   <artifactId>fmi-os-parent-pom</artifactId>
-  <version>0.7-SNAPSHOT</version>
+  <version>0.7.0-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <name>FMI OS Root Parent POM</name>
   <description>The root POM for for Open Source maven projects from FMI</description>
-
-
   <url>https://github.com/${github-repo-owner}/${project.artifactId}</url>
-
 
   <organization>
     <name>FMI OpenSource community</name>
@@ -74,7 +71,8 @@
     <project.scm.id>github</project.scm.id>
     <github-repo-owner>ilkkarinne</github-repo-owner>
     <github.global.server>github</github.global.server>
-    <github-mvn-repo>fmi-os-mvn-repo</github-mvn-repo>
+    <github-mvn-release-repo>fmi-os-mvn-repo</github-mvn-release-repo>
+    <github-mvn-snapshot-repo>fmi-os-mvn-snapshot-repo</github-mvn-snapshot-repo>
     <scm-url>scm:git:https://github.com/${github-repo-owner}/${project.artifactId}.git/</scm-url>
     <scm-web-url>https://github.com/${github-repo-owner}/${project.artifactId}</scm-web-url>
 
@@ -92,6 +90,101 @@
     <!-- or override them both by overriding property java.version. -->
     <maven-compiler-plugin.source.version>${java.version}</maven-compiler-plugin.source.version>
     <maven-compiler-plugin.target.version>${java.version}</maven-compiler-plugin.target.version>
+
+    <!-- Maven plugin versions for pluginManagement section -->
+    <maven-assembly-plugin.version>2.4</maven-assembly-plugin.version>
+    <maven-clean-plugin.version>2.5</maven-clean-plugin.version>
+
+    <maven-antrun-plugin.version>1.7</maven-antrun-plugin.version>
+    <!-- antrun plugin's sshexec target needs this -->
+    <ant-jsch.version>1.9.2</ant-jsch.version>
+    <maven-assembly-plugin.version>2.4</maven-assembly-plugin.version>
+    <assertj-assertions-generator-maven-plugin.version>1.1.0</assertj-assertions-generator-maven-plugin.version>
+    <build-helper-maven-plugin.version>1.8</build-helper-maven-plugin.version>
+    <buildnumber-maven-plugin.version>1.2</buildnumber-maven-plugin.version>
+    <maven-bundle-plugin.version>2.4.0</maven-bundle-plugin.version>
+    <maven-changelog-plugin.version>2.2</maven-changelog-plugin.version>
+    <maven-clean-plugin.version>2.5</maven-clean-plugin.version>
+    <cobertura-maven-plugin.version>2.6</cobertura-maven-plugin.version>
+    <maven-compiler-plugin.version>3.1</maven-compiler-plugin.version>
+    <maven-dependency-plugin.version>2.8</maven-dependency-plugin.version>
+    <maven-deploy-plugin.version>2.8.1</maven-deploy-plugin.version>
+    <maven-ear-plugin.version>2.8</maven-ear-plugin.version>
+    <maven-ejb-plugin.version>2.3</maven-ejb-plugin.version>
+    <maven-eclipse-plugin.version>2.9</maven-eclipse-plugin.version>
+    <maven-enforcer-plugin.version>1.3.1</maven-enforcer-plugin.version>
+    <findbugs-maven-plugin.version>2.5.3</findbugs-maven-plugin.version>
+    <maven-install-plugin.version>2.5.1</maven-install-plugin.version>
+    <maven-jar-plugin.version>2.4</maven-jar-plugin.version>
+    <maven-javadoc-plugin.version>2.9.1</maven-javadoc-plugin.version>
+    <jdepend-maven-plugin.version>2.0-beta-2</jdepend-maven-plugin.version>
+    <!-- We don't use the newest 2.4, because <https://jira.fmi.fi/browse/INFRA-277> -->
+    <maven-jxr-plugin.version>2.3</maven-jxr-plugin.version>
+    <l10n-maven-plugin.version>1.0-alpha-2</l10n-maven-plugin.version>
+    <maven-linkcheck-plugin.version>1.1</maven-linkcheck-plugin.version>
+    <maven-plugin-plugin.version>3.2</maven-plugin-plugin.version>
+    <maven-project-info-reports-plugin.version>2.7</maven-project-info-reports-plugin.version>
+    <maven-rar-plugin.version>2.3</maven-rar-plugin.version>
+    <maven-release-plugin.version>2.5.3</maven-release-plugin.version>
+    <maven-resources-plugin.version>2.6</maven-resources-plugin.version>
+    <maven-shade-plugin.version>2.2</maven-shade-plugin.version>
+    <maven-site-plugin.version>3.3</maven-site-plugin.version>
+    <!-- Doxia modules enable documentation syntaxes to be used in documentation. -->
+    <!-- They are dependencies of maven-site-plugin -->
+    <doxia-module-confluence.version>1.5</doxia-module-confluence.version>
+    <maven-doxia-module-markdown.version>1.3</maven-doxia-module-markdown.version>
+    <doxia-module-xhtml.version>1.5</doxia-module-xhtml.version>
+    <maven-source-plugin.version>2.2.1</maven-source-plugin.version>
+    <maven-surefire-plugin.version>2.16</maven-surefire-plugin.version>
+    <maven-surefire-report-plugin.version>2.16</maven-surefire-report-plugin.version>
+    <taglist-maven-plugin.version>2.4</taglist-maven-plugin.version>
+    <tomcat6-maven-plugin.version>2.2</tomcat6-maven-plugin.version>
+    <tomcat7-maven-plugin.version>2.2</tomcat7-maven-plugin.version>
+    <versions-maven-plugin.version>2.1</versions-maven-plugin.version>
+    <maven-war-plugin.version>2.4</maven-war-plugin.version>
+    <m2e-lifecycle-mapping.version>1.0.0</m2e-lifecycle-mapping.version>
+
+    <assertj-core.version>1.5.0</assertj-core.version>
+    <fmi-common-test.version>0.1-SNAPSHOT</fmi-common-test.version>
+    <fongo.version>1.3.0</fongo.version>
+    <hamcrest.version>1.3</hamcrest.version>
+    <junit.version>4.11</junit.version>
+    <JUnitParams.version>1.0.2</JUnitParams.version>
+    <mockito.version>1.9.5</mockito.version>
+    <powermock.version>1.5.3</powermock.version>
+
+
+    <groovy.version>2.1.0</groovy.version>
+    <logback.version>1.0.13</logback.version>
+    <log4j.version>1.2.14</log4j.version>
+    <slf4j.version>1.7.5</slf4j.version>
+    <sysout-over-slf4j.version>1.0.2</sysout-over-slf4j.version>
+
+
+    <freemarker.version>2.3.20</freemarker.version>
+    <gson.version>2.2.4</gson.version>
+    <guava.version>16.0</guava.version>
+    <jackson.version>2.1.3</jackson.version>
+    <jide.version>3.2.2</jide.version>
+    <joda-time.version>2.3</joda-time.version>
+    <practicalxml.version>1.1.17</practicalxml.version>
+    <velocity.version>1.7</velocity.version>
+
+    <!-- Spring and related -->
+    <aspectj.version>1.7.0</aspectj.version>
+    <spring.version>3.1.2.RELEASE</spring.version>
+    <spring-data.version>1.1.1.RELEASE</spring-data.version>
+    <spring-integration.version>2.2.1.RELEASE</spring-integration.version>
+    <spring-rabbit.version>1.2.0.RELEASE</spring-rabbit.version>
+    <spring-security.version>3.1.2.RELEASE</spring-security.version>
+
+
+    <!-- Quality plugins -->
+    <findbugs-jsr305.version>2.0.3</findbugs-jsr305.version>
+    <findbugs-annotations.version>2.0.3</findbugs-annotations.version>
+
+    <!-- Github site plugin for Github mvn repo deployment -->
+    <site-maven-plugin.version>0.11</site-maven-plugin.version>
 
 
     <maven-bundle-plugin.manifest.path>${project.build.outputDirectory}/META-INF/MANIFEST.MF</maven-bundle-plugin.manifest.path>
@@ -396,7 +489,7 @@
         <plugin>
           <groupId>com.github.github</groupId>
           <artifactId>site-maven-plugin</artifactId>
-          <version>0.11</version>
+          <version>${site-maven-plugin.version}</version>
           <configuration>
             <message>Maven artifacts for ${project.version}</message>  <!-- git commit message -->
             <noJekyll>true</noJekyll>                                  <!-- disable webpage processing -->
@@ -405,7 +498,7 @@
             <includes>
               <include>**/*</include>
             </includes>
-            <repositoryName>${github-mvn-repo}</repositoryName>      <!-- github repo name -->
+            <repositoryName>${github-mvn-snapshot-repo}</repositoryName>      <!-- github repo name -->
             <repositoryOwner>${github-repo-owner}</repositoryOwner>    <!-- github username  -->
             <merge>true</merge>
           </configuration>
@@ -471,10 +564,12 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-assembly-plugin</artifactId>
+        <version>${maven-assembly-plugin.version}</version>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-clean-plugin</artifactId>
+        <version>${maven-assembly-plugin.version}</version>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -535,5 +630,33 @@
     </plugins>
   </build>
 
+  <profiles>
+    <profile>
+      <id>fmi-os-release</id>
+      <build>
+        <pluginManagement>
+          <plugins>
+          <plugin>
+            <groupId>com.github.github</groupId>
+            <artifactId>site-maven-plugin</artifactId>
+            <version>${site-maven-plugin.version}</version>
+            <configuration>
+              <message>Maven artifacts for ${project.version}</message>  <!-- git commit message -->
+              <noJekyll>true</noJekyll>                                  <!-- disable webpage processing -->
+              <outputDirectory>${project.build.directory}/mvn-repo</outputDirectory> <!-- matches distribution management repository url above -->
+              <branch>refs/heads/master</branch>                       <!-- remote branch name -->
+              <includes>
+                <include>**/*</include>
+              </includes>
+              <repositoryName>${github-mvn-release-repo}</repositoryName>      <!-- github repo name -->
+              <repositoryOwner>${github-repo-owner}</repositoryOwner>    <!-- github username  -->
+              <merge>true</merge>
+            </configuration>
+          </plugin>
+        </plugins>
+        </pluginManagement>
+      </build>
+    </profile>
+  </profiles>
 
 </project>
