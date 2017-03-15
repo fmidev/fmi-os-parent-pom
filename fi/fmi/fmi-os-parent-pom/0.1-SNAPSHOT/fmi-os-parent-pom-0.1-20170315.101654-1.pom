@@ -24,9 +24,9 @@
   </ciManagement>
 
   <scm>
-    <connection>scm:git:git@github.com:ilkkarinne/fmi-os-parent-pom.git</connection>
-    <developerConnection>scm:git:git@github.com:ilkkarinne/fmi-os-parent-pom.git</developerConnection>
-    <url>https://github.com/ilkkarinne/fmi-os-parent-pom</url>
+    <connection>${scm-url}</connection>
+    <developerConnection>${scm-url}</developerConnection>
+    <url>${scm-web-url}</url>
 	<tag>HEAD</tag>
   </scm>
 
@@ -43,11 +43,12 @@
 
   <properties>
     <!-- Most of these SHOULD NOT be overriden in child POMs -->
+	<project.scm.id>github</project.scm.id>
 	<github-repo-owner>ilkkarinne</github-repo-owner>
 	<github.global.server>github</github.global.server>
-    <scm-url>scm:git:git@github.com:/${github-repo-owner}/${project.artifactId}.git/</scm-url>
+    <scm-url>scm:git:https://github.com/${github-repo-owner}/${project.artifactId}.git/</scm-url>
     <scm-web-url>https://github.com/${github-repo-owner}/${project.artifactId}</scm-web-url>
-	<project.scm.id>github</project.scm.id>
+
     <!-- site-url>file:///var/doc/mavensites/${project.artifactId}/${project.version}</site-url -->
 
     <!-- This is one of those magic properties available to builds. Format the value to a more standard format -->
