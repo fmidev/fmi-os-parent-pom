@@ -24,36 +24,31 @@
   </ciManagement>
 
   <scm>
-    <connection>scm:git:git@github.com:ilkkarinne/fmi-os-parent-pom.git</connection>
-    <developerConnection>scm:git:git@github.com:ilkkarinne/fmi-os-parent-pom.git</developerConnection>
-    <url>https://github.com/ilkkarinne/fmi-os-parent-pom</url>
+    <connection>${scm-url}</connection>
+    <developerConnection>${scm-url}</developerConnection>
+    <url>${scm-web-url}</url>
 	<tag>HEAD</tag>
   </scm>
 
-<!--
+  <!-- Two-phase release to github as defined at http://stackoverflow.com/questions/14013644/hosting-a-maven-repository-on-github-->
   <distributionManagement>
-    <site>
-      <id>site</id>
-      <name>Maven project website</name>
-      <url>${site-url}</url>
-    </site>
     <repository>
-      <id>release-repo</id>
-      <name>FMI release repository</name>
-      <url>file:///var/doc/maven2</url>
+        <id>internal.repo</id>
+        <name>Temporary Staging Repository</name>
+        <url>file://${project.build.directory}/mvn-repo</url>
     </repository>
-    <snapshotRepository>
-      <id>snapshot-repo</id>
-      <name>FMI snapshot repository</name>
-      <url>file:///var/doc/maven2</url>
-    </snapshotRepository>
   </distributionManagement>
--->
+
+
 
   <properties>
     <!-- Most of these SHOULD NOT be overriden in child POMs -->
-    <scm-url>scm:git:git@github.com:ilkkarinne/${project.artifactId}.git/</scm-url>
-    <scm-web-url>https://github.com/ilkkarinne/${project.artifactId}</scm-web-url>
+	<project.scm.id>github</project.scm.id>
+	<github-repo-owner>ilkkarinne</github-repo-owner>
+	<github.global.server>github</github.global.server>
+    <scm-url>scm:git:https://github.com/${github-repo-owner}/${project.artifactId}.git/</scm-url>
+    <scm-web-url>https://github.com/${github-repo-owner}/${project.artifactId}</scm-web-url>
+
     <!-- site-url>file:///var/doc/mavensites/${project.artifactId}/${project.version}</site-url -->
 
     <!-- This is one of those magic properties available to builds. Format the value to a more standard format -->
@@ -729,6 +724,10 @@
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-deploy-plugin</artifactId>
           <version>${maven-deploy-plugin.version}</version>
+		  <!-- From http://stackoverflow.com/questions/14013644/hosting-a-maven-repository-on-github -->
+		  <configuration>
+		    <altDeploymentRepository>internal.repo::default::file://${project.build.directory}/mvn-repo</altDeploymentRepository>
+		  </configuration>
         </plugin>
 
         <plugin>
@@ -922,6 +921,30 @@
           </dependencies>
         </plugin>
 
+		<plugin>
+		            <groupId>com.github.github</groupId>
+		            <artifactId>site-maven-plugin</artifactId>
+		            <version>0.11</version>
+		            <configuration>
+		                <message>Maven artifacts for ${project.version}</message>  <!-- git commit message -->
+		                <noJekyll>true</noJekyll>                                  <!-- disable webpage processing -->
+		                <outputDirectory>${project.build.directory}/mvn-repo</outputDirectory> <!-- matches distribution management repository url above -->
+		                <branch>refs/heads/mvn-repo</branch>                       <!-- remote branch name -->
+		                <includes><include>**/*</include></includes>
+		                <repositoryName>${project.artifactId}</repositoryName>      <!-- github repo name -->
+		                <repositoryOwner>${github-repo-owner}</repositoryOwner>    <!-- github username  -->
+		            </configuration>
+		            <executions>
+		              <!-- run site-maven-plugin's 'site' target as part of the build's normal 'deploy' phase -->
+		              <execution>
+		                <goals>
+		                  <goal>site</goal>
+		                </goals>
+		                <phase>deploy</phase>
+		              </execution>
+		            </executions>
+		        </plugin>
+
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-source-plugin</artifactId>
@@ -1038,8 +1061,23 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-war-plugin</artifactId>
       </plugin>
+	  <plugin>
+        <groupId>com.github.github</groupId>
+	    <artifactId>site-maven-plugin</artifactId>
+	  </plugin>
     </plugins>
   </build>
+
+  <repositories>
+    <repository>
+        <id>${project.artifactId}-mvn-repo</id>
+        <url>https://raw.github.com/${github-repo-owner}/${project.artifactId}/mvn-repo/</url>
+        <snapshots>
+            <enabled>true</enabled>
+            <updatePolicy>always</updatePolicy>
+        </snapshots>
+    </repository>
+   </repositories>
 
   <reporting>
     <plugins>
@@ -1364,8 +1402,6 @@
     </profile>
 
 
-
-    <!-- START SNIPPET: integration-test-copy-profile -->
     <profile>
       <id>integration-test-copy</id>
       <activation>
