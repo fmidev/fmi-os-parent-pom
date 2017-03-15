@@ -10,7 +10,7 @@
   <description>The root POM for for Open Source maven projects from FMI</description>
 
  
-  <url>${java-projects.baseUrl}/${project.artifactId}/${project.version}/</url>
+  <url>https://github.com/${github-repo-owner}/${project.artifactId}</url>
  
 
   <organization>
@@ -20,7 +20,7 @@
 
   <ciManagement>
     <system>Travis CI</system>
-    <url>${travis.job.url}</url>
+    <!-- url>${travis.job.url}</url -->
   </ciManagement>
 
   <scm>
@@ -46,6 +46,7 @@
 	<project.scm.id>github</project.scm.id>
 	<github-repo-owner>ilkkarinne</github-repo-owner>
 	<github.global.server>github</github.global.server>
+    <github-mvn-repo>fmi-os-mvn-repo</github-mvn-repo>
     <scm-url>scm:git:https://github.com/${github-repo-owner}/${project.artifactId}.git/</scm-url>
     <scm-web-url>https://github.com/${github-repo-owner}/${project.artifactId}</scm-web-url>
 
@@ -197,7 +198,7 @@
     <!-- Fork options, using plugin defaults -->
     <findbugs.fork>true</findbugs.fork>
     <findbugs.jvmArgs />
-    <fingbugs.maxHeap>512</fingbugs.maxHeap>
+    <findbugs.maxHeap>512</findbugs.maxHeap>
     <findbugs.timeout>600000</findbugs.timeout>
  
    
@@ -748,51 +749,6 @@
         </plugin>
 
         <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-enforcer-plugin</artifactId>
-          <version>${maven-enforcer-plugin.version}</version>
-          <executions>
-            <execution>
-              <id>ban-dependencies</id>
-              <!-- Has to be bound to install explicitly, so that dependencies will -->
-              <!-- have been resolved prior to this execution (binds to "verify" by default) -->
-              <phase>install</phase>
-              <goals>
-                <goal>enforce</goal>
-              </goals>
-              <configuration>
-                <skip>false</skip>
-                <fail>true</fail>
-                <failFast>false</failFast>
-                <rules>
-                  <bannedDependencies>
-                    <message>${maven-enforcer-plugin.ban.dependencies.message}</message>
-                    <searchTransitive>true</searchTransitive>
-                    <excludes>
-                      <!-- This *should* ban mockito-all transitively, but alas, does not seem to work -->
-                      <!-- for scope test - which, of course, is what it would be used for. -->
-                      <exclude>org.mockito:mockito-all</exclude>
-                    </excludes>
-                  </bannedDependencies>
-                  <!-- TODO: revisit banTransitiveDependencies, if at some point is able to configure properly -->
-                  <!-- (The following, commented-out configuration does *not* work, as expected per documentation -->
-                  <!-- <http://maven.apache.org/enforcer/enforcer-rules/banTransitiveDependencies.html>) -->
-                  <!-- <banTransitiveDependencies> -->
-                  <!-- <message>${enforcer-plugin.ban.dependencies.message}</message> -->
-                  <!-- <excludes> -->
-                  <!-- <exclude>*</exclude> -->
-                  <!-- </excludes> -->
-                  <!-- <includes> -->
-                  <!-- <include>org.mockito:mockito-all</include> -->
-                  <!-- </includes> -->
-                  <!-- </banTransitiveDependencies> -->
-                </rules>
-              </configuration>
-            </execution>
-          </executions>
-        </plugin>
-
-        <plugin>
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>findbugs-maven-plugin</artifactId>
           <version>${findbugs-maven-plugin.version}</version>
@@ -922,9 +878,9 @@
 		                <message>Maven artifacts for ${project.version}</message>  <!-- git commit message -->
 		                <noJekyll>true</noJekyll>                                  <!-- disable webpage processing -->
 		                <outputDirectory>${project.build.directory}/mvn-repo</outputDirectory> <!-- matches distribution management repository url above -->
-		                <branch>refs/heads/mvn-repo</branch>                       <!-- remote branch name -->
+		                <branch>refs/heads/master</branch>                       <!-- remote branch name -->
 		                <includes><include>**/*</include></includes>
-		                <repositoryName>${project.artifactId}</repositoryName>      <!-- github repo name -->
+		                <repositoryName>${github-mvn-repo}</repositoryName>      <!-- github repo name -->
 		                <repositoryOwner>${github-repo-owner}</repositoryOwner>    <!-- github username  -->
 		            </configuration>
 		            <executions>
@@ -1055,8 +1011,8 @@
 
   <repositories>
     <repository>
-        <id>${project.artifactId}-mvn-repo</id>
-        <url>https://raw.github.com/${github-repo-owner}/${project.artifactId}/mvn-repo/</url>
+        <id>FMI-os-mvn-repo</id>
+        <url>https://raw.github.com/${github-repo-owner}/${github-mvn-repo}/</url>
         <snapshots>
             <enabled>true</enabled>
             <updatePolicy>always</updatePolicy>
@@ -1119,13 +1075,6 @@
           <detectLinks>true</detectLinks>
           <javadocVersion>${maven-javadoc-plugin.javadoc.version}</javadocVersion>
           <javadocExecutable>${maven-javadoc-plugin.javadoc.executable}</javadocExecutable>
-          <!-- Try to link to some util libraries' javadoc -->
-          <!-- See http://maven.apache.org/plugins/maven-javadoc-plugin/javadoc-mojo.html#links -->
-          <links>
-            <link>${guava.javadoc.link}</link>
-            <link>${joda-time.javadoc.link}</link>
-            <link>${spring.javadoc.link}</link>
-          </links>
           <!-- See http://maven.apache.org/plugins/maven-javadoc-plugin/javadoc-mojo.html#linksource -->
           <linksource>true</linksource>
         </configuration>
@@ -1314,45 +1263,6 @@
         </plugins>
       </build>
     </profile>
-   
-    <profile>
-      <!-- The plugin will fail a site build, if SVN is not available, which is why it has been -->
-      <!-- configured to not execute by default, but by activating this profile. -->
-      <id>changelog-report</id>
-      <activation>
-        <activeByDefault>false</activeByDefault>
-        <!-- Activate by adding -Dchangelog-report.execute to mvn command -->
-        <property>
-          <name>changelog-report.execute</name>
-        </property>
-      </activation>
-      <reporting>
-        <plugins>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-changelog-plugin</artifactId>
-            <version>${maven-changelog-plugin.version}</version>
-            <configuration>
-              <skip>true</skip>
-            </configuration>
-            <reportSets>
-              <reportSet>
-                <id>changelog-report</id>
-                <configuration>
-                  <issueLinkUrl>${maven-changelog-plugin.issueLinkUrl}</issueLinkUrl>
-                  <type>${maven-changelog-plugin.type}</type>
-                  <range>${maven-changelog-plugin.range}</range>
-                </configuration>
-                <reports>
-                  <report>changelog</report>
-                </reports>
-              </reportSet>
-            </reportSets>
-          </plugin>
-        </plugins>
-      </reporting>
-    </profile>
-
 
     <profile>
       <id>integration-test-copy</id>
@@ -1370,32 +1280,6 @@
           </plugin>
         </plugins>
       </build>
-    </profile>
-    
-    <profile>
-      <!-- Activate explicitly by adding -Plinkcheck to the mvn command -->
-      <id>linkcheck</id>
-      <activation>
-        <activeByDefault>false</activeByDefault>
-        <!-- May also be activated by adding -Dlinkcheck.execute to the mvn command -->
-        <property>
-          <name>linkcheck.execute</name>
-        </property>
-      </activation>
-      <reporting>
-        <plugins>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-linkcheck-plugin</artifactId>
-            <version>${maven-linkcheck-plugin.version}</version>
-            <configuration>
-              <httpMethod>${maven-linkcheck-plugin.httpMethod}</httpMethod>
-              <!-- TODO: try to figure out, how to set HTTP proxy for the plugin only -->
-              <!-- If not possible, add to jenkins' settings.xml -->
-            </configuration>
-          </plugin>
-        </plugins>
-      </reporting>
     </profile>
 
 
@@ -1468,46 +1352,6 @@
             </plugin>
           </plugins>
         </pluginManagement>
-      </build>
-    </profile>
-
-    <profile>
-      <!-- Provide quality plugin support for Eclipse -->
-      <id>m2e-quality</id>
-      <activation>
-        <property>
-          <name>m2e.version</name>
-        </property>
-      </activation>
-      <properties>
-        <findbugs.failOnError>false</findbugs.failOnError>
-      </properties>
-      <dependencies>
-        <!-- fmi-buildtools is required here as Eclipse does not otherwise load this to local maven repository. It is required for Checkstyle suppressions workaround 
-          below. -->
-        <dependency>
-          <groupId>fi.fmi</groupId>
-          <artifactId>fmi-buildtools</artifactId>
-          <version>${fmi-buildtools.version}</version>
-          <scope>provided</scope>
-        </dependency>
-      </dependencies>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.codehaus.mojo</groupId>
-            <artifactId>findbugs-maven-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>fmi-findbugs-config</id>
-                <phase>compile</phase>
-                <goals>
-                  <goal>findbugs</goal>
-                </goals>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
       </build>
     </profile>
    
