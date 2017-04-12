@@ -69,7 +69,7 @@
   <properties>
     <!-- Most of these SHOULD NOT be overriden in child POMs -->
     <project.scm.id>github</project.scm.id>
-    <github-repo-owner>ilkkarinne</github-repo-owner>
+    <github-repo-owner>fmidev</github-repo-owner>
     <github.global.server>github</github.global.server>
     <github-mvn-release-repo>fmi-os-mvn-repo</github-mvn-release-repo>
     <github-mvn-snapshot-repo>fmi-os-mvn-snapshot-repo</github-mvn-snapshot-repo>
@@ -145,7 +145,6 @@
     <m2e-lifecycle-mapping.version>1.0.0</m2e-lifecycle-mapping.version>
 
     <assertj-core.version>1.5.0</assertj-core.version>
-    <fmi-common-test.version>0.1-SNAPSHOT</fmi-common-test.version>
     <fongo.version>1.3.0</fongo.version>
     <hamcrest.version>1.3</hamcrest.version>
     <junit.version>4.11</junit.version>
