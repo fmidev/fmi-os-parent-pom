@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>fi.fmi</groupId>
   <artifactId>fmi-os-parent-pom</artifactId>
@@ -119,7 +120,7 @@
     <maven-shade-plugin.version>3.2.0</maven-shade-plugin.version>
     <maven-site-plugin.version>3.7.1</maven-site-plugin.version>
     <!-- Github site plugin for Github mvn repo deployment -->
-    <github-site-maven-plugin.version>0.11</github-site-maven-plugin.version>
+    <github-site-maven-plugin.version>0.12</github-site-maven-plugin.version>
     <!-- Doxia modules enable documentation syntaxes to be used in documentation. -->
     <!-- They are dependencies of maven-site-plugin -->
     <doxia-module-confluence.version>1.8</doxia-module-confluence.version>
