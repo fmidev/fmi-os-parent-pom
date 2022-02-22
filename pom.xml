@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>fi.fmi</groupId>
   <artifactId>fmi-os-parent-pom</artifactId>
-  <version>0.8.2-SNAPSHOT</version>
+  <version>0.8.2</version>
   <packaging>pom</packaging>
 
   <name>FMI OS Root Parent POM</name>
@@ -55,7 +55,7 @@
     <connection>${scm-url}</connection>
     <developerConnection>${scm-url}</developerConnection>
     <url>${scm-web-url}</url>
-    <tag>HEAD</tag>
+    <tag>fmi-os-parent-pom-0.8.2</tag>
   </scm>
 
   <!-- Two-phase release to github as defined at http://stackoverflow.com/questions/14013644/hosting-a-maven-repository-on-github-->
